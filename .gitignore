@@ -1,0 +1,13 @@
+# Ignore data
+data/raw/
+data/processed/
+
+# Ignore R session and environment files
+.Rhistory
+.RData
+.Rproj.user/
+
+# Ignore output
+results/
+reports/*.html
+reports/*.pdf

@@ -1,0 +1,6 @@
+dir.create("R")
+dir.create("data/raw", recursive = TRUE)
+dir.create("fun")
+dir.create("data/processed", recursive = TRUE)
+dir.create("results")
+dir.create("reports")
