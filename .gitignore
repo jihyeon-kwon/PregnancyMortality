@@ -5,6 +5,8 @@ data/processed/
 # Ignore R session and environment files
 .Rhistory
 .RData
+.RDataTmp
+.RDataTmp1
 .Rproj.user/
 
 # Ignore output
