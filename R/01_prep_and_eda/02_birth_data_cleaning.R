@@ -30,15 +30,22 @@ read_from_R <- paste0(here("data/raw/birth-data/births_"), years_R, ".Rdata")
 y <- 1
 load(read_from_R[y])
 colnames(births18a) # only need year and cnty fips for now
-birth <- births18a[, c("year", "cntyfips")]
-save(birth, file = save_to[y])
+births18a <- births18a %>%
+  filter(magecat < 8)  # 8: 45-49, 9: 50-54
+births18a$cntyfips <- str_pad(births18a$fips, width = 5, pad = "0")
+birth <- births18a[, c("cntyfips", "year")]
+write.csv(birth, file = save_to[y], row.names = FALSE)  # CSV output
+
 rm(birth)
 
 y <- 2
 load(read_from_R[2])
 colnames(births19a) # only need year and cnty fips for now
-birth <- births19a[, c("year", "cntyfips")]
-save(birth, file = save_to[y])
+births19a <- births19a %>%
+  filter(magecat < 8)  # 8: 45-49, 9: 50-54
+births19a$cntyfips <- str_pad(births19a$fips, width = 5, pad = "0")
+birth <- births19a[, c("cntyfips", "year")]
+write.csv(birth, file = save_to[y], row.names = FALSE)  # CSV output
 rm(birth)
 
 # 2. using the .txt file -----
