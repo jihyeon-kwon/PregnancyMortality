@@ -8,6 +8,7 @@ data/processed/
 .RDataTmp
 .RDataTmp1
 .Rproj.user/
+R/etc/
 
 # Ignore output
 results/
@@ -17,7 +18,9 @@ reports/*.pdf
 .Rdata
 .httr-oauth
 .DS_Store
+data/.DS_Store
 .quarto
+
 
 # Ignore my note
 Notes.docx

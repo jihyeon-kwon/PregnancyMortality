@@ -43,8 +43,8 @@ death <- map_dfr(save_to, ~ read_csv(.x, col_types = cols(sex = col_character())
 
 # by year and county only
 death_aggr1 <- death %>%
-  select(year, r_cy_fips, suicide, homicide, drug) %>% 
-  group_by(year, r_cy_fips) %>%
+  select(year, r_cy_fips, preg, suicide, homicide, drug) %>% 
+  group_by(year, r_cy_fips, preg) %>%
   summarise(
     suicide_sum = sum(suicide, na.rm = TRUE),
     homicide_sum = sum(homicide, na.rm = TRUE),
@@ -54,15 +54,34 @@ death_aggr1 <- death %>%
 
 save(death_aggr1, file = here("data/processed/death-year-cty.Rdata"))
 
-# also by raceth
-death_aggr2 <- death %>%
-  select(year, r_cy_fips, raceth, suicide, homicide, drug) %>% 
-  group_by(year, r_cy_fips, raceth) %>%
+
+# aggregate by year and residence state -----
+
+death_aggr2 <- death_aggr1 %>%
+  mutate(state_fips = substr(r_cy_fips, 1, 2)) %>%
+  group_by(year, state_fips, preg) %>%
   summarise(
-    suicide_sum = sum(suicide, na.rm = TRUE),
-    homicide_sum = sum(homicide, na.rm = TRUE),
-    drug_sum = sum(drug, na.rm = TRUE),
+    suicide_sum = sum(suicide_sum, na.rm = TRUE),
+    homicide_sum = sum(homicide_sum, na.rm = TRUE),
+    drug_sum = sum(drug_sum, na.rm = TRUE),
     .groups = "drop"
   )
 
-save(death_aggr2, file = here("data/processed/death-year-cty-race.Rdata"))
+save(death_aggr2, file = here("data/processed/death-year-state.Rdata"))
+
+
+
+
+# 
+# # also by raceth
+# death_aggr2 <- death %>%
+#   select(year, r_cy_fips, raceth, suicide, homicide, drug) %>% 
+#   group_by(year, r_cy_fips, raceth) %>%
+#   summarise(
+#     suicide_sum = sum(suicide, na.rm = TRUE),
+#     homicide_sum = sum(homicide, na.rm = TRUE),
+#     drug_sum = sum(drug, na.rm = TRUE),
+#     .groups = "drop"
+#   )
+# 
+# save(death_aggr2, file = here("data/processed/death-year-cty-race.Rdata"))

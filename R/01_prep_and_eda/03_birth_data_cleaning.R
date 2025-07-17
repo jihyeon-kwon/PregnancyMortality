@@ -87,6 +87,18 @@ birth_aggr1 <- birth %>%
   )
 
 save(birth_aggr1, file = here("data/processed/birth-year-cty.Rdata"))
+
+# by year and state only
+birth_aggr2 <- birth_aggr1 %>%
+  mutate(state_fips = substr(cntyfips, 1, 2)) %>%
+  group_by(year, state_fips) %>%
+  summarise(
+    birth = n(),
+    .groups = "drop"
+  )
+
+save(birth_aggr2, file = here("data/processed/birth-year-state.Rdata"))
+
 # 
 # # also by raceth
 # birth_aggr2 <- birth %>%

@@ -1,5 +1,5 @@
 # ==============================================================================
-# Title       : process_death_data.R
+# Title       : process_death_data2.R
 # Project     : Pregnancy Associated Mortality
 # Description : Convert .TXT file to Rdata that only includes relevant data
 # Author      : Jihyeon Kwon
@@ -139,17 +139,17 @@ process_death_data <- function(read_from, save_to, year) {
       hispind == 1 ~ 5 # Hisp
     ))
   } else if (year >= 2022) {
-    death$hispanic <- as.numeric(substr(data$V1,484,486))
-    death$race <- as.numeric(substr(data$V1,489,490)) # this is the 40 category race var
-    
+    death$hispanic <- as.numeric(substr(data$V1, 484, 486))
+    death$race <- as.numeric(substr(data$V1, 489, 490)) # this is the 40 category race var
+
     # Race/ethnicity 5 cat: White, Black, American Indian, API, Hispanic
-    death$hispind <- ifelse(death$hispanic>=200 & death$hispanic<996,1,0)
-    death<- death %>% mutate(raceth=case_when(
-      race==1 & hispind==0 ~ 1, # NHW
-      race %in% c(2,15:18,25:30,35:39) & hispind==0 ~ 2, #NHB
-      race %in% c(3,19:21,31:33,40) & hispind==0 ~ 3, #NHAIAN
-      race %in% c(4:14,22:24,34) & hispind==0 ~ 4, #NHAPI
-      hispind==1 ~ 5 #Hisp
+    death$hispind <- ifelse(death$hispanic >= 200 & death$hispanic < 996, 1, 0)
+    death <- death %>% mutate(raceth = case_when(
+      race == 1 & hispind == 0 ~ 1, # NHW
+      race %in% c(2, 15:18, 25:30, 35:39) & hispind == 0 ~ 2, # NHB
+      race %in% c(3, 19:21, 31:33, 40) & hispind == 0 ~ 3, # NHAIAN
+      race %in% c(4:14, 22:24, 34) & hispind == 0 ~ 4, # NHAPI
+      hispind == 1 ~ 5 # Hisp
     ))
   } else {
     stop("Year not recognized. Please check the year input.")
@@ -170,8 +170,12 @@ process_death_data <- function(read_from, save_to, year) {
   # age: 10 - 44 (thus code 8-14)
 
   preg_death <- death %>%
-    filter(preg %in% c(2, 3, 4) &
-      age_group %in% 8:14)
+    filter(age_group %in% 8:14) %>%  # age criteria (10–44)
+    mutate(preg = case_when(
+      preg %in% c(2, 3, 4) ~ "Y",
+      !(preg %in% c(2, 3, 4)) & sex == "F" ~ "N",
+      TRUE ~ NA_character_
+    ))
 
 
   # save data -----

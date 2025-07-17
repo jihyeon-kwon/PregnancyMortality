@@ -7,6 +7,7 @@
 # ==============================================================================
 
 # load packages -----
+library(tidyverse)
 library(tidycensus)
 library(here)
 
@@ -50,7 +51,7 @@ pop_state <- get_acs(
     # Hispanic Female 10–44
     paste0("B01001I_", sprintf("%03d", 20:26), "E")
   ),
-  geometry = TRUE,
+  geometry = FALSE,
   year = 2023
 )
 
@@ -83,7 +84,7 @@ pop_county <- get_acs(
     # Hispanic Female 10–44
     paste0("B01001I_", sprintf("%03d", 20:26))
   ),
-  geometry = TRUE,
+  geometry = FALSE,
   year = 2023
 )
 
