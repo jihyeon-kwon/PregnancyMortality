@@ -44,7 +44,7 @@ for (cause_var in causes) {
   }
   
   dimnames(data$Y)[[1]] <- dimnames(data$n)[[1]] <- state_sf$state_name
-  dimnames(data$Y)[[2]] <- dimnames(data$n)[[2]] <- c("Preg", "All")
+  dimnames(data$Y)[[2]] <- dimnames(data$n)[[2]] <- c("Preg", "NotPregnant")
   dimnames(data$Y)[[3]] <- dimnames(data$n)[[3]] <- years
 
   # Initialize model
