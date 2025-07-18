@@ -82,7 +82,7 @@ Y_all <- death_aggr2 %>%
   filter(state_fips %in% state_sf$state_fips) %>%
   group_by(year, state_fips) %>% # vary by year
   summarize(
-    suicie_sum = sum(suicide_sum, na.rm = TRUE),
+    suicide_sum = sum(suicide_sum, na.rm = TRUE),
     homicide_sum = sum(homicide_sum, na.rm = TRUE),
     drug_sum = sum(drug_sum, na.rm = TRUE)
   )

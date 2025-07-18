@@ -93,7 +93,7 @@ birth_aggr2 <- birth_aggr1 %>%
   mutate(state_fips = substr(cntyfips, 1, 2)) %>%
   group_by(year, state_fips) %>%
   summarise(
-    birth = n(),
+    birth = sum(birth, na.rm = TRUE),
     .groups = "drop"
   )
 
