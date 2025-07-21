@@ -20,7 +20,9 @@ reports/*.pdf
 .DS_Store
 data/.DS_Store
 .quarto
-
+results/CAR/output/
+results/MCAR/output/
+results/MSTCAR/output/
 
 # Ignore my note
 Notes.docx

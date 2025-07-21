@@ -65,7 +65,7 @@ for (cause_var in causes) {
     name = name,
     dir = here("results/output/"),
     .show_plots = FALSE,
-    # iteration = iter # this doesn't work?
+    iteration = iter
   )
 
   # Save each Output
@@ -91,7 +91,8 @@ for (cause_var in causes) {
   )
 
   # Remove the duplicate (original samples)
-  if (dir.exists(paste0(here("results/output/"), name))) {
-    unlink(paste0(here("results/output/"), name), recursive = TRUE)
+  target_dir <- here("results/output", name)
+  if (dir.exists(target_dir)) {
+    unlink(target_dir, recursive = TRUE, force = TRUE)
   }
 }

@@ -42,9 +42,6 @@ for (cause_var in causes) {
     data$n[, 2] <- unlist(All[All$year == years[y], "pop"]) -
       unlist(Preg[Preg$year == years[y], "birth"])
 
-    dimnames(data$Y)[[1]] <- dimnames(data$n)[[1]] <- state_sf$state_name
-    dimnames(data$Y)[[2]] <- dimnames(data$n)[[2]] <- c("Pregnant", "NotPregnant")
-    
     # Initialize model
     name <- paste0("MCAR_", cause_var, "_", years[y])
     initialize_model(
@@ -62,7 +59,7 @@ for (cause_var in causes) {
       name = name,
       dir = here("results/output/"),
       .show_plots = FALSE,
-      # iteration = iter # this doesn't work?
+      iteration = iter
     )
 
     # Save each Output
@@ -88,8 +85,9 @@ for (cause_var in causes) {
     )
     
     # Remove the duplicate (original samples)
-    if (dir.exists(paste0(here("results/output/"), name))) {
-      unlink(paste0(here("results/output/"), name), recursive = TRUE)
+    target_dir <- here("results/output", name)
+    if (dir.exists(target_dir)) {
+      unlink(target_dir, recursive = TRUE, force = TRUE)
     }
   }
 }

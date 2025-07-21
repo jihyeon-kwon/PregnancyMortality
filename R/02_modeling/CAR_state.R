@@ -33,8 +33,6 @@ for (cause_var in causes) {
     data <- list()
     data$Y <- unlist(Preg[Preg$year == years[y], cause_var])
     data$n <- unlist(Preg[Preg$year == years[y], "birth"])
-
-    names(data$Y) <- names(data$n) <- state_sf$state_name
     
     # Initialize model
     name <- paste0("CAR_Preg_", cause_var, "_", years[y])
@@ -79,8 +77,9 @@ for (cause_var in causes) {
     )
     
     # Remove the duplicate (original samples)
-    if (dir.exists(paste0(here("results/output/"), name))) {
-      unlink(paste0(here("results/output/"), name), recursive = TRUE)
+    target_dir <- here("results/output", name)
+    if (dir.exists(target_dir)) {
+      unlink(target_dir, recursive = TRUE, force = TRUE)
     }
   }
 }
@@ -143,8 +142,9 @@ for (cause_var in causes) {
     )
     
     # Remove the duplicate (original samples)
-    if (dir.exists(paste0(here("results/output/"), name))) {
-      unlink(paste0(here("results/output/"), name), recursive = TRUE)
+    target_dir <- here("results/output", name)
+    if (dir.exists(target_dir)) {
+      unlink(target_dir, recursive = TRUE, force = TRUE)
     }
   }
 }
