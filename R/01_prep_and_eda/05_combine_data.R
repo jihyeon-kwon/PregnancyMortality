@@ -12,7 +12,7 @@
 library(sf)
 library(here)
 library(tidyverse)
-
+library(spdep)
 
 
 
@@ -79,6 +79,7 @@ Y_preg %>%
 
 # data for mortality among women aged 10-44 -----
 Y_all <- death_aggr2 %>%
+  filter(!is.na(preg)) %>% # so that we'll only include either pregnant ppl (Y) or non-preg women (N)
   filter(state_fips %in% state_sf$state_fips) %>%
   group_by(year, state_fips) %>% # vary by year
   summarize(
